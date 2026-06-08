@@ -6,30 +6,30 @@
 // React-Invenio-Forms is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 import React, { Component } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import "tinymce/tinymce";
-import "tinymce/models/dom/model";
-import "tinymce/themes/silver";
-import "tinymce/icons/default";
-import "tinymce/plugins/table";
-import "tinymce/plugins/autoresize";
-import "tinymce/plugins/code";
-import "tinymce/plugins/codesample";
-import "tinymce/plugins/image";
-import "tinymce/plugins/link";
-import "tinymce/plugins/lists";
-import "tinymce/plugins/wordcount";
-import "tinymce/plugins/preview";
+import { Editor } from "@hugerte/hugerte-react";
+import "hugerte/hugerte";
+import "hugerte/models/dom/model";
+import "hugerte/themes/silver";
+import "hugerte/icons/default";
+import "hugerte/plugins/table";
+import "hugerte/plugins/autoresize";
+import "hugerte/plugins/code";
+import "hugerte/plugins/codesample";
+import "hugerte/plugins/image";
+import "hugerte/plugins/link";
+import "hugerte/plugins/lists";
+import "hugerte/plugins/wordcount";
+import "hugerte/plugins/preview";
 import PropTypes from "prop-types";
 import { Button, Message } from "semantic-ui-react";
 import { FilesList } from "./FilesList";
 
 // Make content inside the editor look identical to how we will render it across the site.
-// TinyMCE runs within an iframe, so we cannot style it with page-wide CSS styles as normal.
+// hugerte runs within an iframe, so we cannot style it with page-wide CSS styles as normal.
 //
-// TinyMCE overrides blockquotes with custom styles, so we need to use !important to override
+// hugerte overrides blockquotes with custom styles, so we need to use !important to override
 // the overrides in a consistent and reliable way.
-// https://github.com/tinymce/tinymce-dist/blob/8d7491f2ee341c201b68cc7c3701d54703edd474/skins/content/tinymce-5/content.css#L61-L70
+// https://github.com/hugerte/hugerte-dist/blob/8d7491f2ee341c201b68cc7c3701d54703edd474/skins/content/hugerte-5/content.css#L61-L70
 const editorContentStyle = (disabled) => `
 body {
   font-size: 14px;
@@ -146,7 +146,7 @@ export class RichEditor extends Component {
     if (meta.filetype === "image") {
       if (this.editorRef.current) {
         // List of image extensions documented in:
-        // https://www.tiny.cloud/docs/tinymce/latest/image/#images_file_types
+        // https://www.tiny.cloud/docs/hugerte/latest/image/#images_file_types
 
         // We could accept "image/*", but then we would let users upload and inline SVG files from the image upload dialog,
         // but this would not work since we are forbidding the rendering of inline SVG for security reasons
@@ -171,7 +171,7 @@ export class RichEditor extends Component {
       }
 
       // Progress state visible when uploading via the the Link and Image popup dialogs.
-      // Taken from: https://github.com/tinymce/tinymce/issues/5133
+      // Taken from: https://github.com/hugerte/hugerte/issues/5133
       if (this.editorDialogRef.current) {
         this.editorDialogRef.current.block("Uploading file...");
       }
@@ -234,7 +234,7 @@ export class RichEditor extends Component {
 
     if (this.editorRef.current) {
       // List of image extensions documented in:
-      // https://www.tiny.cloud/docs/tinymce/latest/image/#images_file_types
+      // https://www.tiny.cloud/docs/hugerte/latest/image/#images_file_types
       const imagesFileTypes = this.editorRef.current.options.get("images_file_types");
       const imagesExtensions = imagesFileTypes.split(",");
 
@@ -347,7 +347,7 @@ export class RichEditor extends Component {
     if (attachFilesEnabled) {
       config = {
         ...config,
-        // No need for TinyMCE to generate unique filenames since we delegate this responsibility to the backend.
+        // No need for hugerte to generate unique filenames since we delegate this responsibility to the backend.
         images_reuse_filename: true,
         // This function is called when a user drag-n-drops an image onto the editor text area.
         images_upload_handler: this.imagesUploadHandler,
