@@ -6,3 +6,5 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import "@testing-library/jest-dom/extend-expect";
+
+window.IS_REACT_ACT_ENVIRONMENT = true;
