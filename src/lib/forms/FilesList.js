@@ -3,7 +3,7 @@
 //
 // React-Invenio-Forms is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Label } from "semantic-ui-react";
 import { humanReadableBytes } from "../utils/humanReadableBytes";
@@ -18,7 +18,7 @@ import { humanReadableBytes } from "../utils/humanReadableBytes";
  */
 export class FilesList extends Component {
   render() {
-    const { files, onFileDelete } = this.props;
+    const { files = undefined, onFileDelete = undefined } = this.props;
 
     return files?.map((file) => (
       <Label
@@ -48,9 +48,4 @@ export class FilesList extends Component {
 FilesList.propTypes = {
   files: PropTypes.array,
   onFileDelete: PropTypes.func,
-};
-
-FilesList.defaultProps = {
-  files: undefined,
-  onFileDelete: undefined,
 };

@@ -5,7 +5,7 @@
 // React-Invenio-Forms is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { getIn, FieldArray } from "formik";
 import { Form, Icon } from "semantic-ui-react";
@@ -14,14 +14,16 @@ import _filter from "lodash/filter";
 import _matches from "lodash/matches";
 import { FieldLabel } from "./FieldLabel";
 
+const EMPTY_REQUIRED_OPTIONS = [];
+
 export class ArrayField extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // Chosen because it will never cross with 0-indexed pre-existing keys.
       nextKey: -1,
-      hasBeenShown: false,
     };
+    this.hasBeenShown = false;
   }
 
   hasGroupErrors = (errors) => {
@@ -41,18 +43,21 @@ export class ArrayField extends Component {
    * @returns An array of values to display
    */
   getValues = (values, fieldPath) => {
-    const { requiredOptions, defaultNewValue, showEmptyValue } = this.props;
-    const { hasBeenShown } = this.state;
+    const {
+      requiredOptions = EMPTY_REQUIRED_OPTIONS,
+      defaultNewValue,
+      showEmptyValue = false,
+    } = this.props;
     const existingValues = getIn(values, fieldPath, []);
 
     if (
-      !hasBeenShown &&
+      !this.hasBeenShown &&
       _isEmpty(requiredOptions) &&
       _isEmpty(existingValues) &&
       showEmptyValue
     ) {
       existingValues.push({ __key: existingValues.length, ...defaultNewValue });
-      this.setState({ hasBeenShown: true });
+      this.hasBeenShown = true;
     }
 
     for (const requiredOption of requiredOptions) {
@@ -73,14 +78,14 @@ export class ArrayField extends Component {
       ...arrayHelpers
     } = props;
     const {
-      addButtonLabel,
-      addButtonClassName,
+      addButtonLabel = "Add new row",
+      addButtonClassName = "align-self-end mt-15",
       children,
       defaultNewValue,
       fieldPath,
-      label,
-      labelIcon,
-      helpText,
+      label = "",
+      labelIcon = "",
+      helpText = "",
       requiredOptions,
       showEmptyValue,
       ...uiProps
@@ -159,14 +164,4 @@ ArrayField.propTypes = {
   labelIcon: PropTypes.string,
   requiredOptions: PropTypes.array,
   showEmptyValue: PropTypes.bool,
-};
-
-ArrayField.defaultProps = {
-  addButtonLabel: "Add new row",
-  addButtonClassName: "align-self-end mt-15",
-  helpText: "",
-  label: "",
-  labelIcon: "",
-  requiredOptions: [],
-  showEmptyValue: false,
 };

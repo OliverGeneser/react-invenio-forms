@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { RemoteSelectField } from "../../RemoteSelectField";
 import { Field, getIn } from "formik";
@@ -18,7 +18,7 @@ export class SubjectAutocompleteDropdown extends Component {
     });
 
   prepareSuggest = (searchQuery) => {
-    const { limitTo } = this.props;
+    const { limitTo = "" } = this.props;
     return limitTo === "" || limitTo === "all"
       ? searchQuery
       : `${limitTo}:${searchQuery}`;
@@ -27,16 +27,17 @@ export class SubjectAutocompleteDropdown extends Component {
   render() {
     const {
       fieldPath,
-      required,
-      multiple,
-      placeholder,
-      clearable,
-      label,
+      required = false,
+      multiple = true,
+      placeholder = "Search for a subject by name",
+      clearable = true,
+      label = "",
       icon,
       width,
-      allowAdditions,
-      noQueryMessage,
-      disabled,
+      allowAdditions = true,
+      noQueryMessage = "Search or create subjects...",
+      disabled = false,
+      limitTo,
       ...uiProps
     } = this.props;
     const labelContent = label ? (
@@ -99,7 +100,7 @@ export class SubjectAutocompleteDropdown extends Component {
 SubjectAutocompleteDropdown.propTypes = {
   fieldPath: PropTypes.string.isRequired,
   limitTo: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.node,
   icon: PropTypes.string,
   required: PropTypes.bool,
   multiple: PropTypes.bool,
@@ -109,18 +110,4 @@ SubjectAutocompleteDropdown.propTypes = {
   allowAdditions: PropTypes.bool,
   noQueryMessage: PropTypes.string,
   disabled: PropTypes.bool,
-};
-
-SubjectAutocompleteDropdown.defaultProps = {
-  required: false,
-  limitTo: "",
-  label: "",
-  icon: undefined,
-  multiple: true,
-  clearable: true,
-  placeholder: "Search for a subject by name",
-  width: undefined,
-  noQueryMessage: "Search or create subjects...",
-  allowAdditions: true,
-  disabled: false,
 };

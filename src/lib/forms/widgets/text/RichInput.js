@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { FieldLabel } from "../../FieldLabel";
 import { RichInputField } from "../../RichInputField";
@@ -6,6 +6,8 @@ import {
   fieldCommonProps,
   showHideOverridableWithDynamicId,
 } from "../../fieldComponents";
+
+const defaultEditorConfig = {};
 
 class RichInputComponent extends Component {
   render() {
@@ -15,11 +17,11 @@ class RichInputComponent extends Component {
       label,
       icon,
       description,
-      editorConfig,
+      editorConfig = defaultEditorConfig,
       disabled,
       helpText: helpTextProp,
       labelIcon: labelIconProp,
-      optimized,
+      optimized = true,
     } = this.props;
 
     const helpText = helpTextProp ?? description;
@@ -51,15 +53,9 @@ RichInputComponent.propTypes = {
   /**
    * @deprecated Use `helpText` instead
    */
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   optimized: PropTypes.bool,
   ...fieldCommonProps,
-};
-
-RichInputComponent.defaultProps = {
-  icon: undefined,
-  editorConfig: {},
-  optimized: true,
 };
 
 export const RichInput = showHideOverridableWithDynamicId(RichInputComponent);

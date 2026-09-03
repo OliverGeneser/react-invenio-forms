@@ -5,7 +5,7 @@
 // React-Invenio-Forms is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { FastField, Field, getIn } from "formik";
 import { Form } from "semantic-ui-react";
@@ -31,7 +31,7 @@ export class TextAreaField extends Component {
   };
 
   render() {
-    const { optimized, fieldPath, ...props } = this.props;
+    const { optimized = false, fieldPath, ...props } = this.props;
 
     const FormikField = optimized ? FastField : Field;
 
@@ -50,8 +50,4 @@ export class TextAreaField extends Component {
 TextAreaField.propTypes = {
   fieldPath: PropTypes.string.isRequired,
   optimized: PropTypes.bool,
-};
-
-TextAreaField.defaultProps = {
-  optimized: false,
 };

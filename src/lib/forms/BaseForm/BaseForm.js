@@ -5,14 +5,14 @@
 // React-Invenio-Forms is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Formik } from "formik";
 import { Form } from "semantic-ui-react";
 
 export class BaseForm extends Component {
   render() {
-    const { formik, onSubmit, children } = this.props;
+    const { formik = undefined, onSubmit, children } = this.props;
     return (
       <Formik onSubmit={onSubmit} {...formik}>
         <Form>{children}</Form>
@@ -29,8 +29,4 @@ BaseForm.propTypes = {
     validationSchema: PropTypes.object,
     validate: PropTypes.func,
   }),
-};
-
-BaseForm.defaultProps = {
-  formik: undefined,
 };

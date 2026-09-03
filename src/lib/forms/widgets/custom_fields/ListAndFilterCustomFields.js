@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import {
   Dropdown,
@@ -154,12 +154,8 @@ export class ListAndFilterCustomFields extends Component {
 
 ListAndFilterCustomFields.propTypes = {
   alreadyAddedFields: PropTypes.array.isRequired,
-  fieldsList: PropTypes.array.isRequired,
+  fieldsList: PropTypes.object.isRequired,
   fieldPath: PropTypes.string.isRequired,
   handleSelectField: PropTypes.func.isRequired,
   sections: PropTypes.array,
-};
-
-ListAndFilterCustomFields.defaultProps = {
-  sections: undefined,
 };

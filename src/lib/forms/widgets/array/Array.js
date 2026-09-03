@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { FieldLabel } from "../../FieldLabel";
 import { ArrayField } from "../../ArrayField";
@@ -19,7 +19,7 @@ class ArrayComponent extends Component {
       children,
       addButtonLabel,
       defaultNewValue,
-      className,
+      className = "",
       helpText: helpTextProp,
       labelIcon: labelIconProp,
     } = this.props;
@@ -57,13 +57,8 @@ ArrayComponent.propTypes = {
   /**
    * @deprecated Use `helpText` instead
    */
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   ...fieldCommonProps,
-};
-
-ArrayComponent.defaultProps = {
-  className: "",
-  icon: undefined,
 };
 
 export const Array = showHideOverridableWithDynamicId(ArrayComponent);

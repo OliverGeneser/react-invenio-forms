@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Icon, Popup } from "semantic-ui-react";
 import { FieldLabel } from "../../FieldLabel";

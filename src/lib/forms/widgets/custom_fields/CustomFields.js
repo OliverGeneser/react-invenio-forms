@@ -5,12 +5,14 @@
 // React-Invenio-Forms is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import { default as DiscoverFieldsSection } from "./DiscoverFieldsSection";
 import { AccordionField } from "../../AccordionField";
 import { importWidget, loadWidgetsFromConfig } from "../loader";
 import { Container } from "semantic-ui-react";
+
+const defaultIncludesPaths = (fields) => fields.map((field) => field.key);
 
 export class CustomFields extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export class CustomFields extends Component {
   }
 
   populateConfig = async () => {
-    const { includesPaths, fieldPathPrefix } = this.props;
+    const { includesPaths = defaultIncludesPaths, fieldPathPrefix } = this.props;
     try {
       const { sectionsConfig, discoverFieldsConfig } =
         await this.loadCustomFieldsWidgets();
@@ -49,7 +51,12 @@ export class CustomFields extends Component {
   };
 
   async loadSectionWidget(sectionCfg) {
-    const { templateLoaders, record, includesPaths, fieldPathPrefix } = this.props;
+    const {
+      templateLoaders,
+      record,
+      includesPaths = defaultIncludesPaths,
+      fieldPathPrefix,
+    } = this.props;
     const paths = includesPaths(sectionCfg.fields, fieldPathPrefix);
     if (sectionCfg.ui_widget) {
       return await importWidget(
@@ -96,7 +103,7 @@ export class CustomFields extends Component {
 
   render() {
     const { sections, discoverFieldsSections } = this.state;
-    const { templateLoaders, record, severityChecks } = this.props;
+    const { templateLoaders, record, severityChecks = null } = this.props;
 
     return (
       <>
@@ -159,9 +166,4 @@ CustomFields.propTypes = {
   includesPaths: PropTypes.func,
   severityChecks: PropTypes.object,
   record: PropTypes.object.isRequired,
-};
-
-CustomFields.defaultProps = {
-  includesPaths: (fields) => fields.map((field) => field.key),
-  severityChecks: null,
 };
